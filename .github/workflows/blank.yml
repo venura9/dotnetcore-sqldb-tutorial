@@ -11,7 +11,7 @@ name: CI
 on:
   push:
     branches: [ master ]
-    branches-ignore: [archive/*]
+    #branches-ignore: [archive/*]
 
   pull_request:
     branches: 
