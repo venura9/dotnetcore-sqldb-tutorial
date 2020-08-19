@@ -46,9 +46,13 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     
-    - run: zip build.zip -r release/*
+#     #bad bad 
+#     - run: zip build.zip -r release
     
-    - name: Upload math result for job 1
+    - run: zip build.zip *
+      working-directory: release
+    
+    - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: 'build'
