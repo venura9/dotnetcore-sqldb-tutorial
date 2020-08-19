@@ -46,9 +46,6 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     
-#     #bad bad 
-#     - run: zip build.zip -r release
-    
     - run: zip build.zip *
       working-directory: release
 
@@ -60,40 +57,40 @@ jobs:
         path: release/build.zip
 
 
-#     - uses: actions/checkout@v2
-#       with:
-#         repository: 'Azure/azure-quickstart-templates'
-#         path: 'azure-quickstart-templates'
+    - uses: actions/checkout@v2
+      with:
+        repository: 'Azure/azure-quickstart-templates'
+        path: 'azure-quickstart-templates'
 
 #https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
         
-#     - name: Run ARM-TTK
-#       uses: venura9/arm-ttk@master
-#       id: arm-ttk
-#       with: 
-#         path: azure-quickstart-templates/101-webapp-basic-windows/
+    - name: Run ARM-TTK
+      uses: venura9/arm-ttk@master
+      id: arm-ttk
+      with: 
+        path: azure-quickstart-templates/101-webapp-basic-windows/
 
-#     - name: Results for Run ARM-TTK with 'path'
-#       run: |
-#         content=${{ steps.arm-ttk.outputs.results }}
-#         echo "Results $content"
+    - name: Results for Run ARM-TTK with 'path'
+      run: |
+        content=${{ steps.arm-ttk.outputs.results }}
+        echo "Results $content"
 
 
 # https://github.com/actions/create-release
 
-#     - name: Create Release
-#       id: create_release
-#       uses: actions/create-release@v1
-#       env:
-#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-#       with:
-#         tag_name: ${{ github.sha }}
-#         release_name: Release ${{ github.ref }} - $BUILD_NUMBER
-#         body: |
-#             Release ${{ github.ref }} - $BUILD_NUMBER
-#             Commig: ${{ github.sha }}
-#         draft: false
-#         prerelease: false
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+      with:
+        tag_name: ${{ github.sha }}
+        release_name: Release ${{ github.ref }} - $BUILD_NUMBER
+        body: |
+            Release ${{ github.ref }} - $BUILD_NUMBER
+            Commig: ${{ github.sha }}
+        draft: false
+        prerelease: false
 
   dev:
 #https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables    
