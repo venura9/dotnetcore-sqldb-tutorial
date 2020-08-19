@@ -1,5 +1,6 @@
 name: .NET Core
 
+
 on:
   push:
     branches: [ master ]
@@ -11,6 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest
 
+# https://github.com/actions/checkout      
     steps:
     - uses: actions/checkout@v2
 
@@ -27,7 +29,8 @@ jobs:
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-      
+
+
 #     - uses: actions/checkout@v2
 #       with:
 #         repository: 'Azure/azure-quickstart-templates'
@@ -44,7 +47,9 @@ jobs:
 #       run: |
 #         content=${{ steps.arm-ttk.outputs.results }}
 #         echo "Results $content"
-        
+
+
+# https://github.com/actions/create-release
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
