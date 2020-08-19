@@ -51,7 +51,8 @@ jobs:
     
     - run: zip build.zip *
       working-directory: release
-    
+
+#https://docs.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
@@ -59,24 +60,23 @@ jobs:
         path: build.zip
 
 
-#     - uses: actions/checkout@v2
-#       with:
-#         repository: 'Azure/azure-quickstart-templates'
-#         path: 'azure-quickstart-templates'
+    - uses: actions/checkout@v2
+      with:
+        repository: 'Azure/azure-quickstart-templates'
+        path: 'azure-quickstart-templates'
 
 #https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
-#Literals and Functions 
         
-#     - name: Run ARM-TTK
-#       uses: venura9/arm-ttk@master
-#       id: arm-ttk
-#       with: 
-#         path: azure-quickstart-templates/101-webapp-basic-windows/
+    - name: Run ARM-TTK
+      uses: venura9/arm-ttk@master
+      id: arm-ttk
+      with: 
+        path: azure-quickstart-templates/101-webapp-basic-windows/
 
-#     - name: Results for Run ARM-TTK with 'path'
-#       run: |
-#         content=${{ steps.arm-ttk.outputs.results }}
-#         echo "Results $content"
+    - name: Results for Run ARM-TTK with 'path'
+      run: |
+        content=${{ steps.arm-ttk.outputs.results }}
+        echo "Results $content"
 
 
 # https://github.com/actions/create-release
@@ -117,12 +117,12 @@ jobs:
 #https://github.com/marketplace/actions/azure-webapp
 #https://github.com/Azure/actions-workflow-samples/blob/master/AppService/asp.net-core-webapp-on-azure.yml
 
-      # Deploy to Azure Web apps
-      - name: Deploy the build
-        uses: azure/webapps-deploy@v2
-        with: 
-          app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-          package: 'build.zip'
+#       # Deploy to Azure Web apps
+#       - name: Deploy the build
+#         uses: azure/webapps-deploy@v2
+#         with: 
+#           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
+#           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+#           package: 'build.zip'
 
 
