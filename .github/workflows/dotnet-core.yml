@@ -1,18 +1,32 @@
+#For a blank repo
+#https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions
+#set and get a variable
+
+
 name: .NET Core
-
-
+#let's get a badge for the run
+#https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
+#https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+
 jobs:
   build:
 
     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         shell: bash
+#         working-directory: scripts
 
-# https://github.com/actions/checkout      
+
+# marketplacce - https://github.com/marketplace?type=actions
+
+# Checkout action - https://github.com/actions/checkout      
     steps:
     - uses: actions/checkout@v2
 
@@ -29,13 +43,17 @@ jobs:
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    
+    - run: zip build.zip -r release
 
 
 #     - uses: actions/checkout@v2
 #       with:
 #         repository: 'Azure/azure-quickstart-templates'
 #         path: 'azure-quickstart-templates'
-        
+
+#https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
+#Literals and Functions 
         
 #     - name: Run ARM-TTK
 #       uses: venura9/arm-ttk@master
@@ -50,20 +68,32 @@ jobs:
 
 
 # https://github.com/actions/create-release
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-      with:
-        tag_name: ${{ github.sha }}
-        release_name: Release ${{ github.ref }} - $BUILD_NUMBER
-        body: |
-            Release ${{ github.ref }} - $BUILD_NUMBER
-            Commig: ${{ github.sha }}
-        draft: false
-        prerelease: false
+
+#     - name: Create Release
+#       id: create_release
+#       uses: actions/create-release@v1
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+#       with:
+#         tag_name: ${{ github.sha }}
+#         release_name: Release ${{ github.ref }} - $BUILD_NUMBER
+#         body: |
+#             Release ${{ github.ref }} - $BUILD_NUMBER
+#             Commig: ${{ github.sha }}
+#         draft: false
+#         prerelease: false
+
+  dev:
+    name: Deploy Development Environment
+    needs: build
+    runs-on: ubuntu-latest
     
+    steps:
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v2
+        with:
+          name: build
+
 
 
 
