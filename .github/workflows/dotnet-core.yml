@@ -1,6 +1,8 @@
 #For a blank repo
 #https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions
+#https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 #set and get a variable
+#jobs
 
 
 name: .NET Core
@@ -84,14 +86,14 @@ jobs:
 #         prerelease: false
 
   dev:
+#https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables    
     name: Deploy Development Environment
     needs: build
     runs-on: ubuntu-latest
     env:
       WEBAPP: 'venura9-webapp-test'
       WEBAPP_RG: 'venura9-webapp-test-rg'
-      
-    
+  
     steps:
       - name: Download math result for job 1
         uses: actions/download-artifact@v2
