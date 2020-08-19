@@ -57,7 +57,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: 'build'
-        path: build.zip
+        path: ./build.zip
 
 
     - uses: actions/checkout@v2
