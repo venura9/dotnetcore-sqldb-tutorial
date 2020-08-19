@@ -12,8 +12,11 @@ on:
   push:
     branches: [ master ]
     branches-ignore: [archive/*]
+
   pull_request:
-    branches: [ master ]
+    branches: 
+      - 'master'
+      - '!archive/**'
     
     
 
