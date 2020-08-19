@@ -115,6 +115,8 @@ jobs:
 
 
 #https://github.com/marketplace/actions/azure-webapp
+#https://github.com/Azure/actions-workflow-samples/blob/master/AppService/asp.net-core-webapp-on-azure.yml
+
       # Deploy to Azure Web apps
       - name: Deploy the build
         uses: azure/webapps-deploy@v2
