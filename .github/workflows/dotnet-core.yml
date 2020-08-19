@@ -87,12 +87,16 @@ jobs:
     name: Deploy Development Environment
     needs: build
     runs-on: ubuntu-latest
+    env:
+      WEBAPP: 'venura9-webapp-test'
+      WEBAPP_RG: 'venura9-webapp-test-rg'
+      
     
     steps:
       - name: Download math result for job 1
         uses: actions/download-artifact@v2
         with:
-          name: build
+          name: 'build'
 
 
 
