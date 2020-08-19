@@ -46,7 +46,13 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     
-    - run: zip build.zip -r release
+    - run: zip build.zip -r release/*
+    
+    - name: Upload math result for job 1
+      uses: actions/upload-artifact@v2
+      with:
+        name: 'build'
+        path: build.zip
 
 
 #     - uses: actions/checkout@v2
@@ -95,10 +101,11 @@ jobs:
       WEBAPP_RG: 'venura9-webapp-test-rg'
   
     steps:
-      - name: Download math result for job 1
+      - name: Download the build
         uses: actions/download-artifact@v2
         with:
           name: 'build'
+      - run: ls
 
 
 
