@@ -36,8 +36,17 @@ jobs:
         echo Add other actions to build,
         echo test, and deploy your project.
         
+        
+    # You must create a secret named ACTIONS_STEP_DEBUG with the value true to see the debug messages set by this command in the log. 
     - run: echo "::debug::Set the Octocat variable"
-    - run: echo "::add-mask::Mona The Octocat"
+    
+    - run: echo "::warning file=app.js,line=1,col=5::Missing semicolon"
+
+
+    - run: |
+        MY_NAME="Mona The Octocat"
+        echo "::add-mask::$MY_NAME"
+
     - run: echo "::set-output name=hello::world"
       id: greet
     
