@@ -75,6 +75,7 @@ jobs:
         content=${{ steps.arm-ttk.outputs.results }}
         echo "Results $content"
 
+#https://github.com/marketplace/actions/azure-login
 #    - uses: azure/login@v1.1
 #      with:
 #        creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -97,24 +98,26 @@ jobs:
 #         draft: false
 #         prerelease: false
 
-  dev:
+  prod:
 #https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
 #https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables    
-    name: Deploy Development Environment
+    name: Deploy Production Environment
     needs: build
     runs-on: ubuntu-latest
-    #if: github.ref == '/ref/'
+    if: github.ref == 'refs/heads/master'
 
     env:
-      AZURE_WEBAPP_NAME: 'venura9-webapp-test'
-      WEBAPP_RG: 'venura9-webapp-test-rg'
+      AZURE_WEBAPP_NAME: 'venura9-webapp-prod'
+      WEBAPP_RG: 'venura9-webapp-prod-rg'
   
     steps:
       - name: Download the build
         uses: actions/download-artifact@v2
         with:
           name: 'build'
-          
+
+      - run: ls -al    
+
 #https://github.com/marketplace/actions/azure-login
 
 
