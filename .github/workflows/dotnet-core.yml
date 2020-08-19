@@ -75,6 +75,11 @@ jobs:
         content=${{ steps.arm-ttk.outputs.results }}
         echo "Results $content"
 
+#    - uses: azure/login@v1.1
+#      with:
+#        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+
 
 # https://github.com/actions/create-release
 
@@ -93,10 +98,13 @@ jobs:
 #         prerelease: false
 
   dev:
+#https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
 #https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables    
     name: Deploy Development Environment
     needs: build
     runs-on: ubuntu-latest
+    #if: github.ref == '/ref/'
+
     env:
       AZURE_WEBAPP_NAME: 'venura9-webapp-test'
       WEBAPP_RG: 'venura9-webapp-test-rg'
