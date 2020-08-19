@@ -57,26 +57,26 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: 'build'
-        path: ./build.zip
+        path: release/build.zip
 
 
-    - uses: actions/checkout@v2
-      with:
-        repository: 'Azure/azure-quickstart-templates'
-        path: 'azure-quickstart-templates'
+#     - uses: actions/checkout@v2
+#       with:
+#         repository: 'Azure/azure-quickstart-templates'
+#         path: 'azure-quickstart-templates'
 
 #https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
         
-    - name: Run ARM-TTK
-      uses: venura9/arm-ttk@master
-      id: arm-ttk
-      with: 
-        path: azure-quickstart-templates/101-webapp-basic-windows/
+#     - name: Run ARM-TTK
+#       uses: venura9/arm-ttk@master
+#       id: arm-ttk
+#       with: 
+#         path: azure-quickstart-templates/101-webapp-basic-windows/
 
-    - name: Results for Run ARM-TTK with 'path'
-      run: |
-        content=${{ steps.arm-ttk.outputs.results }}
-        echo "Results $content"
+#     - name: Results for Run ARM-TTK with 'path'
+#       run: |
+#         content=${{ steps.arm-ttk.outputs.results }}
+#         echo "Results $content"
 
 
 # https://github.com/actions/create-release
