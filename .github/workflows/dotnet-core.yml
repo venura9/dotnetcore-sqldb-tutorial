@@ -32,7 +32,7 @@ jobs:
       with:
         repository: 'Azure/azure-quickstart-templates'
     
-    - run: ls Azure/azure-quickstart-templates
+    - run: ls -al
 
 
 
