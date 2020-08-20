@@ -73,7 +73,7 @@ jobs:
         content=${{ steps.arm-ttk.outputs.results }}
         echo "Results $content"
         
-    - run: az group --name 'prod-rg' --location 'australiaeast'
+    - run: az group create --name 'prod-rg' --location 'australiaeast'
     
     - run: az deployment group what-if --resource-group 'prod-rg'
       working-directory: azure-quickstart-templates/101-webapp-basic-windows/
