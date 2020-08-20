@@ -140,7 +140,8 @@ jobs:
 
 
       - run: |
-         xml=$(az webapp deployment list-publishing-profiles --name ${{ github.repository_owner }}-prod-app --resource-group 'prod-rg' --xml)
+         webappname=${{ github.repository_owner }}-prod-app
+         xml=$(az webapp deployment list-publishing-profiles --name  $webappname --resource-group 'prod-rg' --xml)
          echo "::set-output name=xml::$xml"
          id: publish_profile
 
