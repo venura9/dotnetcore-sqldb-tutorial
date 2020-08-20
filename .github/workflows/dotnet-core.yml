@@ -129,7 +129,7 @@ jobs:
       - uses: azure/login@v1.1
         with:
          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+         
       - uses: actions/checkout@v2
         with:
           repository: 'Azure/azure-quickstart-templates'
@@ -139,6 +139,11 @@ jobs:
         working-directory: azure-quickstart-templates/101-webapp-basic-windows/
 
 
+      - run: |
+         xml=$(az webapp deployment list-publishing-profiles --name ${{ github.repository_owner }}-prod-app --resource-group 'prod-rg' --xml)
+         echo "::set-output name=xml::$xml"
+         id: publish_profile
+
 #https://github.com/marketplace/actions/azure-webapp
 #https://github.com/Azure/actions-workflow-samples/blob/master/AppService/asp.net-core-webapp-on-azure.yml
 
@@ -147,7 +152,8 @@ jobs:
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ github.repository_owner }}-prod-app
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          publish-profile: ${{ steps.publish_profile.outputs.xml }} # Define secret variable in repository settings as per action documentation:  
           package: 'build.zip'
 
 
