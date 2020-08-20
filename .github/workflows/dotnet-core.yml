@@ -29,6 +29,10 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
+        
+    - run: |
+       dotnet tool install --global dotnet-ef
+       dotnet ef database update
 
     - name: Install dependencies
       run: dotnet restore
@@ -39,9 +43,6 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     
-    - run: |
-       dotnet tool install --global dotnet-ef
-       dotnet ef database update
     
     - run: zip build.zip *
       working-directory: release
