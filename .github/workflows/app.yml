@@ -6,8 +6,11 @@ on:
   pull_request:
     branches: [ master ]
 
+
+
 jobs:
   build:
+    name: Building our APP
 
     runs-on: ubuntu-latest
 
@@ -35,4 +38,26 @@ jobs:
       with:
         name: 'build'
         path: release/build.zip
-      
+  
+  prod:
+#https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
+#https://docs.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables    
+    name: Deploy Production Environment
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    
+    steps:
+      - name: Download the build
+        uses: actions/download-artifact@v2
+        with:
+          name: 'build'
+         
+      - name: Deploy the build
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ github.repository_owner }}-prod-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          #publish-profile: ${{ steps.publish_profile.outputs.xml }} # Define secret variable in repository settings as per action documentation:  
+          package: 'build.zip'
+    
