@@ -6,7 +6,9 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: 
+      - mater
+
   pull_request:
     branches: [ master ]
 
@@ -31,3 +33,21 @@ jobs:
       run: |
         echo Add other actions to build,
         echo test, and deploy your project.
+        
+    - run: echo "::debug::Set the Octocat variable"
+    
+    - run: echo "::warning file=app.js,line=1,col=5::Missing semicolon"
+    
+    - run: |
+        MY_NAME="Mona The Octocat"
+        echo "::add-mask::$MY_NAME"
+    
+    - run: echo "::set-output name=hello::world"
+      id: greet
+    
+    - run: echo "hello ${{ steps.greet.outputs.hello }}!"
+      if: success()
+      shell: bash
+      continue-on-error: true
+      timeout-minutes: 5
+
