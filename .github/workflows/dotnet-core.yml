@@ -107,9 +107,9 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
-    env:
-      AZURE_WEBAPP_NAME: 'venura9-webapp-prod'
-      WEBAPP_RG: 'venura9-webapp-prod-rg'
+#     env:
+#       AZURE_WEBAPP_NAME: 'venura9-webapp-prod'
+#       WEBAPP_RG: 'venura9-webapp-prod-rg'
   
     steps:
       - name: Download the build
@@ -137,12 +137,12 @@ jobs:
 #https://github.com/marketplace/actions/azure-webapp
 #https://github.com/Azure/actions-workflow-samples/blob/master/AppService/asp.net-core-webapp-on-azure.yml
 
-#       # Deploy to Azure Web apps
-#       - name: Deploy the build
-#         uses: azure/webapps-deploy@v2
-#         with: 
-#           app-name: ${{ github.repository_owner }}-prod-app
-#           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-#           package: 'build.zip'
+      # Deploy to Azure Web apps
+      - name: Deploy the build
+        uses: azure/webapps-deploy@v2
+        with: 
+          app-name: ${{ github.repository_owner }}-prod-app
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          package: 'build.zip'
 
 
