@@ -39,7 +39,9 @@ jobs:
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     
-    - run: dotnet ef database update
+    - run: |
+       dotnet tool install --global dotnet-ef
+       dotnet ef database update
     
     - run: zip build.zip *
       working-directory: release
