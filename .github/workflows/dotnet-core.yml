@@ -78,6 +78,8 @@ jobs:
     - run: az deployment group what-if --resource-group 'prod-rg'
       working-directory: azure-quickstart-templates/101-webapp-basic-windows/
     
+    - run: az group deployment validate --resource-group
+      working-directory: azure-quickstart-templates/101-webapp-basic-windows/
 
 
 
