@@ -1,4 +1,4 @@
-name: .NET Core
+name: ARM
 #let's get a badge for the run
 #https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
@@ -40,4 +40,8 @@ jobs:
     
     - run: az group deployment validate --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
       working-directory: azure-quickstart-templates/101-webapp-basic-windows/
+    
+    - run: az group deployment create --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app sku=B1
+      working-directory: azure-quickstart-templates/101-webapp-basic-windows/
+    
     
