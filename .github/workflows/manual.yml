@@ -15,6 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps: 
+    - uses: azure/login@v1.1
+      with:
+       creds: ${{ secrets.AZURE_CREDENTIALS }}
+            
     - uses: actions/checkout@v2
       with:
         repository: 'Azure/azure-quickstart-templates'
@@ -30,3 +34,10 @@ jobs:
       run: |
         content=${{ steps.arm-ttk.outputs.results }}
         echo "Results $content"
+    
+    - run: az deployment group what-if --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
+      working-directory: azure-quickstart-templates/101-webapp-basic-windows/
+    
+    - run: az group deployment validate --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
+      working-directory: azure-quickstart-templates/101-webapp-basic-windows/
+    
