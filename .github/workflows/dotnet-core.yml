@@ -80,7 +80,7 @@ jobs:
     - run: az deployment group what-if --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
       working-directory: azure-quickstart-templates/101-webapp-basic-windows/
     
-    - run: az group deployment validate --resource-group --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
+    - run: az group deployment validate --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
       working-directory: azure-quickstart-templates/101-webapp-basic-windows/
 
 
@@ -120,7 +120,18 @@ jobs:
       - run: ls -al    
 
 #https://github.com/marketplace/actions/azure-login
+#https://github.com/marketplace/actions/azure-login
+      - uses: azure/login@v1.1
+        with:
+         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
+      - uses: actions/checkout@v2
+        with:
+          repository: 'Azure/azure-quickstart-templates'
+          path: 'azure-quickstart-templates'
+
+      - run: az group deployment create --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
+        working-directory: azure-quickstart-templates/101-webapp-basic-windows/
 
 
 #https://github.com/marketplace/actions/azure-webapp
@@ -130,7 +141,7 @@ jobs:
 #       - name: Deploy the build
 #         uses: azure/webapps-deploy@v2
 #         with: 
-#           app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
+#           app-name: ${{ github.repository_owner }}-prod-app
 #           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
 #           package: 'build.zip'
 
