@@ -17,9 +17,22 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.301
+    
     - name: Install dependencies
       run: dotnet restore
+    
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore --output release
+    
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    
+    - run: zip build.zip *
+      working-directory: release
+      
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: 'build'
+        path: release/build.zip
+      
