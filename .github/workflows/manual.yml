@@ -1,0 +1,32 @@
+name: .NET Core
+#let's get a badge for the run
+#https://docs.github.com/en/actions/reference/events-that-trigger-workflows
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+#https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps: 
+    - uses: actions/checkout@v2
+      with:
+        repository: 'Azure/azure-quickstart-templates'
+        path: 'azure-quickstart-templates'
+        
+    - name: Run ARM-TTK
+      uses: venura9/arm-ttk@master
+      id: arm-ttk
+      with: 
+        path: azure-quickstart-templates/101-webapp-basic-windows/
+
+    - name: Results for Run ARM-TTK with 'path'
+      run: |
+        content=${{ steps.arm-ttk.outputs.results }}
+        echo "Results $content"
