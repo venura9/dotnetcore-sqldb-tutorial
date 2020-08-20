@@ -130,7 +130,7 @@ jobs:
           repository: 'Azure/azure-quickstart-templates'
           path: 'azure-quickstart-templates'
 
-      - run: az group deployment create --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app
+      - run: az group deployment create --resource-group 'prod-rg' --template-file azuredeploy.json --parameters webAppName=${{ github.repository_owner }}-prod-app sku=B1
         working-directory: azure-quickstart-templates/101-webapp-basic-windows/
 
 
