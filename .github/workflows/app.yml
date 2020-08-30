@@ -59,7 +59,9 @@ jobs:
         with:
          creds: ${{ secrets.AZURE_CREDENTIALS }}
           
-      - run: |
+      - name: get the publishing profile
+        id: publish_profile
+        run: |
          webappname=${{ github.repository_owner }}-prod-app
          text=$(az webapp deployment list-publishing-profiles --name  ${webappname} --resource-group 'prod-rg' --xml)
          
@@ -67,7 +69,6 @@ jobs:
          text="${text//$'\n'/'%0A'}"
          text="${text//$'\r'/'%0D'}"
          echo "::set-output name=xml::$text"
-         id: publish_profile
          
       - name: Deploy the build
         uses: azure/webapps-deploy@v2
