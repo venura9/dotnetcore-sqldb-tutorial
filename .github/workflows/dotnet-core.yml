@@ -3,9 +3,9 @@ name: .NET Core
 #https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
-    branches: [ master ]
+    branches: [ !master ]
   pull_request:
-    branches: [ master ]
+    branches: [ !master ]
 
 #https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
