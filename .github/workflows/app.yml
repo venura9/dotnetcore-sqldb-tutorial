@@ -55,6 +55,10 @@ jobs:
         with:
           name: 'build'
           
+      - uses: azure/login@v1.1
+        with:
+         creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
       - run: |
          webappname=${{ github.repository_owner }}-prod-app
          text=$(az webapp deployment list-publishing-profiles --name  ${webappname} --resource-group 'prod-rg' --xml)
