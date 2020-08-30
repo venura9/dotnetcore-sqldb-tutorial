@@ -7,7 +7,6 @@ on:
     branches: [ master ]
 
 
-
 jobs:
   build:
     name: Building our APP
@@ -25,19 +24,22 @@ jobs:
       run: dotnet restore
     
     - name: Build
-      run: dotnet build --configuration Release --no-restore --output release
+      run: dotnet build --configuration Release --no-restore
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     
-    - run: zip build.zip *
-      working-directory: release
+    - name: Publish
+      run: dotnet publish -c Release -o publish
+
+    - run: zip app.zip *
+      working-directory: publish
       
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: 'build'
-        path: release/build.zip
+        path: publish/app.zip
   
   prod:
 #https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
@@ -59,5 +61,5 @@ jobs:
           app-name: ${{ github.repository_owner }}-prod-app
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
           #publish-profile: ${{ steps.publish_profile.outputs.xml }} # Define secret variable in repository settings as per action documentation:  
-          package: 'build.zip'
+          package: 'app.zip'
     
