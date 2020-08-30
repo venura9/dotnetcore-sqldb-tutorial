@@ -1,4 +1,4 @@
-name: ARM
+name: Infrastructure
 #let's get a badge for the run
 #https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
@@ -10,7 +10,7 @@ on:
 #https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
 jobs:
-  build:
+  prod:
 
     runs-on: ubuntu-latest
     
