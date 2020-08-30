@@ -54,12 +54,22 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: 'build'
+          
+      - run: |
+         webappname=${{ github.repository_owner }}-prod-app
+         text=$(az webapp deployment list-publishing-profiles --name  ${webappname} --resource-group 'prod-rg' --xml)
+         
+         text="${text//'%'/'%25'}"
+         text="${text//$'\n'/'%0A'}"
+         text="${text//$'\r'/'%0D'}"
+         echo "::set-output name=xml::$text"
+         id: publish_profile
          
       - name: Deploy the build
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ github.repository_owner }}-prod-app
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
-          #publish-profile: ${{ steps.publish_profile.outputs.xml }} # Define secret variable in repository settings as per action documentation:  
+          #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          publish-profile: ${{ steps.publish_profile.outputs.xml }}
           package: 'app.zip'
     
