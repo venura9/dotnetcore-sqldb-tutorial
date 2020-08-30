@@ -64,11 +64,6 @@ jobs:
         run: |
          webappname=${{ github.repository_owner }}-prod-app
          text=$(az webapp deployment list-publishing-profiles --name  ${webappname} --resource-group 'prod-rg' --xml)
-         
-         text="${text//'%'/'%25'}"
-         text="${text//$'\n'/'%0A'}"
-         text="${text//$'\r'/'%0D'}"
-         echo $text
          echo "::set-output name=xml::$text"
          
       - name: Deploy the build
