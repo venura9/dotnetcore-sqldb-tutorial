@@ -6,8 +6,9 @@ name: Sample
 # events but only for the master branch
 on:
   push:
-    branches: 
-      - master
+    branches-ignore: ['**']
+#     branches: 
+#       - master
 
   pull_request:
     branches: [ master ]
