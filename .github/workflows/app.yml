@@ -65,6 +65,6 @@ jobs:
       - name: Deploy the build
         uses: azure/webapps-deploy@v2
         with: 
-          app-name: ${{ github.repository_owner }}-$ENVIRONMENT-app
+          app-name: ${{ github.repository_owner }}-${{ env.ENVIRONMENT }}-app
           package: 'app.zip'
     
