@@ -4,15 +4,28 @@ defaults:
   run:
     shell: bash
 
+#let's get a badge for the run
+#https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
   push:
-    branches: [ master ] 
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+#https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
 
 jobs:
-     
   build:
-    name: CI (Build)
+
     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         shell: bash
+#         working-directory: scripts
+
+
+# marketplacce - https://github.com/marketplace?type=actions
+# Checkout action - https://github.com/actions/checkout      
 
     steps:
     - uses: actions/checkout@v2
