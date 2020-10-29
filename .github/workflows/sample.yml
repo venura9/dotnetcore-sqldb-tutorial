@@ -1,17 +1,33 @@
 # This is a basic workflow to help you get started with Actions
 
+#https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions
+#https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+
 name: Sample
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches-ignore: ['**']
-#     branches: 
-#       - master
+#     branches-ignore: ['**']
+    branches: 
+      - master
 
   pull_request:
     branches: [ master ]
+
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+# on:
+#   push:
+#     branches: [ master ]
+#     #branches-ignore: [archive/*]
+
+#   pull_request:
+#     branches: 
+#       - 'master'
+#       - '!archive/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -35,6 +51,7 @@ jobs:
         echo Add other actions to build,
         echo test, and deploy your project.
         
+    # You must create a secret named ACTIONS_STEP_DEBUG with the value true to see the debug messages set by this command in the log. 
     - run: echo "::debug::Set the Octocat variable"
     
     - run: echo "::warning file=app.js,line=1,col=5::Missing semicolon"
@@ -52,3 +69,4 @@ jobs:
       continue-on-error: true
       timeout-minutes: 5
 
+# Try and create a status badge for this one :)
