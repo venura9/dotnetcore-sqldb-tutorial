@@ -16,6 +16,7 @@ on:
 
 jobs:
   build:
+    name: CI (Build the 'APP')
 
     runs-on: ubuntu-latest
 #     defaults:
@@ -56,11 +57,27 @@ jobs:
     - run: zip -r app.zip *
       working-directory: publish
       
+    #https://docs.github.com/en/actions/configuring-and-managing-workflows/persisting-workflow-data-using-artifacts
     - name: Upload Artifact
       uses: actions/upload-artifact@v2
       with:
         name: 'build'
         path: publish/app.zip
+        
+#     #https://github.com/actions/create-release
+#     - name: Create Release
+#       id: create_release
+#       uses: actions/create-release@v1
+#       env:
+#         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+#       with:
+#         tag_name: ${{ github.sha }}
+#         release_name: Release ${{ github.ref }} - $BUILD_NUMBER
+#         body: |
+#             Release ${{ github.ref }} - $BUILD_NUMBER
+#             Commig: ${{ github.sha }}
+#         draft: false
+#         prerelease: false
   
   deploy_prod:
   #https://docs.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions
@@ -78,13 +95,17 @@ jobs:
         with:
           name: 'build'
           
+      #https://github.com/marketplace/actions/azure-login
       - uses: azure/login@v1
         with:
          creds: ${{ secrets.AZURE_CREDENTIALS }}         
-         
+      
+      #https://github.com/marketplace/actions/azure-webapp
+      #https://github.com/Azure/actions-workflow-samples/blob/master/AppService/asp.net-core-webapp-on-azure.yml
       - name: Deploy the build
         uses: azure/webapps-deploy@v2
         with: 
           app-name: ${{ github.repository_owner }}-${{ env.ENVIRONMENT }}-app
+          #publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
           package: 'app.zip'
     
