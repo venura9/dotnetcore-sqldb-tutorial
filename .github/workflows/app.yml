@@ -26,8 +26,6 @@ jobs:
     
     - name: Build
       run: |
-        dotnet tool install -g dotnet-ef
-        dotnet ef database update
         dotnet build --configuration Release --no-restore
     
     - name: Test
@@ -36,7 +34,7 @@ jobs:
     - name: Publish
       run: dotnet publish -c Release -o publish
 
-    - run: zip app.zip *
+    - run: zip -r app.zip *
       working-directory: publish
       
     - name: Upload Artifact
