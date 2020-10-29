@@ -58,7 +58,7 @@ jobs:
     
     - run: |
         MY_NAME="Mona The Octocat"
-        echo "::add-mask::$MY_NAME"
+        echo "My_Secret_Name - ::add-mask::$MY_NAME"
     
     - run: echo "::set-output name=hello::world"
       id: greet
