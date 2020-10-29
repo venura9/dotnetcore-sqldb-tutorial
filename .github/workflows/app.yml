@@ -37,15 +37,21 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     
-    - name: Build
+    - name: Include Local DB
       run: |
-        dotnet build --configuration Release --no-restore
+        dotnet tool install -g dotnet-ef
+        dotnet ef database update
+    
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
     
     - name: Test
       run: dotnet test --no-restore --verbosity normal
     
     - name: Publish
-      run: dotnet publish -c Release -o publish
+      run: |
+        dotnet publish -c Release -o publish
+        cp localdatabase.db publish
 
     - run: zip -r app.zip *
       working-directory: publish
