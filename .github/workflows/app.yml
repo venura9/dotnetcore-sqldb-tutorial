@@ -1,8 +1,8 @@
 name: APP
 
-defaults:
-  run:
-    shell: bash
+# defaults:
+#   run:
+#     shell: bash
 
 #https://docs.github.com/en/actions/reference/events-that-trigger-workflows
 on:
